@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace; /* Coding style font */
+            color: #e23939; /* Code-like green color */
+            text-align: center; /* Center text */
+            height: 100vh; /* Full height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            overflow: hidden; /* Prevent scrollbars */
+            position: relative;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: black; /* Background color for fallback */
+            z-index: -1; /* Make sure particles are behind content */
+        }
+
+        .typing-text {
+            font-size: 19px; /* Font size for typing text */
+            text-shadow: 0 0 5px #ee3737, 0 0 10px #f0300e; /* Glow effect for initial text */
+            border-right: 2px solid rgb(255, 255, 255);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.7s step-end infinite; /* Cursor blink */
+            margin-bottom: 10px; /* Space between texts */
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .buttons {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space between buttons */
+            width: 200px;
+            text-align: center;
+            position: relative; /* Position relative for button movement */
+            opacity: 0; /* Initially hidden */
+        }
+
+        button {
+            background-color: #2d333b; /* GitHub button color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            border-radius: 5px; /* Rounded corners */
+            position: relative; /* Set button position relative for movement */
+        }
+        #noButton {
+        position: absolute;
+        margin-left: 160px;
+        transition: 0.5s;
+        }
+
+        #yesButton {
+        position: absolute;
+        margin-right: 149px;
+        }
+
+        button:hover {
+            background-color: #4f545c; /* Darker on hover */
+        }
+
+        .thank-you-message {
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            align-items: center; /* Center text and GIF */
+            justify-content: center; /* Center vertically */
+        }
+
+        .thank-you-text {
+            font-size: 24px; /* Font size for thank you text */
+            color: rgb(236, 135, 152); /* Pink color for thank you text */
+            text-shadow: 0 0 5px rgb(243, 80, 107), 0 0 10px rgb(238, 77, 104); /* Glow effect */
+            white-space: nowrap;
+            overflow: hidden;
+            animation: blink 0.6s step-end infinite; /* Cursor blink */
+            margin-bottom: 10px; /* Space between text and GIF */
+            text-align: center; /* Center the thank-you text */
+        }
+
+        img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+            width: 290px; /* Adjust width as needed */
+            
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Particle background container -->
+    <div id="particles-js"></div>
+
+    <!-- Existing content -->
+    <div class="typing-text" id="typingText"></div>
+    <div class="typing-text" id="questionText" style="opacity: 0;"></div> <!-- Initially hidden -->
+    <div class="buttons" id="buttonsDiv">
+        <button id="noButton" onmouseover="moveButton()" onclick="moveButton()">No</button>
+        <button id="yesBtn">Yes</button>
+    </div>
+
+    <div class="thank-you-message" id="thankYouMessage">
+        <div class="thank-you-text" id="thankYouText1"></div>
+        <div class="thank-you-text" id="thankYouText2"></div>
+        <img src="" id="thankYouGif">
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Particle.js configuration
+        particlesJS("particles-js", {
+            particles: {
+                number: {
+                    value: 100,
+                    density: {
+                        enable: true,
+                        value_area: 800,
+                    },
+                },
+                color: {
+                    value: "#ffffff",
+                },
+                shape: {
+                    type: "star",
+                    stroke: {
+                        width: 0,
+                        color: "#000000",
+                    },
+                    polygon: {
+                        nb_sides: 5,
+                    },
+                },
+                opacity: {
+                    value: 1,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 10,
+                        opacity_min: 0.1,
+                        sync: false,
+                    },
+                },
+                size: {
+                    value: 4,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 1,
+                        size_min: 0.3,
+                        sync: false,
+                    },
+                },
+                move: {
+                    enable: true,
+                    speed: 1,
+                    direction: "bottom-left",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200,
+                    },
+                },
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: {
+                        enable: false,
+                    },
+                    onclick: {
+                        enable: false,
+                    },
+                    resize: true,
+                },
+            },
+            retina_detect: true,
+        });
+
+        // Existing script for text typing and buttons
+        const typingText = document.getElementById('typingText');
+        const questionText = document.getElementById('questionText');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noButton');
+        const buttonsDiv = document.getElementById('buttonsDiv');
+        const thankYouMessage = document.getElementById('thankYouMessage');
+        const thankYouText1 = document.getElementById('thankYouText1');
+        const thankYouText2 = document.getElementById('thankYouText2');
+        const thankYouGif = document.getElementById('thankYouGif');
+
+        const messages = [
+            "Welcome to my profile, stalker!",
+            "Did you like my profile photo?"
+        ];
+        let currentMessageIndex = 0;
+        let index = 0;
+
+        function typeText() {
+            if (index < messages[currentMessageIndex].length) {
+                if (currentMessageIndex === 0) {
+                    typingText.textContent += messages[currentMessageIndex].charAt(index);
+                } else {
+                    questionText.textContent += messages[currentMessageIndex].charAt(index);
+                }
+                index++;
+                setTimeout(typeText, 80); // Adjust speed here
+            } else {
+                if (currentMessageIndex === 0) {
+                    currentMessageIndex++;
+                    index = 0;
+                    setTimeout(() => {
+                        questionText.style.opacity = 1;
+                        typeText();
+                    }, 500);
+                } else {
+                    buttonsDiv.style.opacity = 1;
+                }
+            }
+        }
+
+        function typeThankYouText() {
+            const thankYouMessages = ["Thank you, sweetheart!", "Your pic is so cute too!"];
+            let currentIndex = 0;
+            let charIndex = 0;
+
+            function typeNextMessage() {
+                if (charIndex < thankYouMessages[currentIndex].length) {
+                    if (currentIndex === 0) {
+                        thankYouText1.textContent += thankYouMessages[currentIndex].charAt(charIndex);
+                    } else {
+                        thankYouText2.textContent += thankYouMessages[currentIndex].charAt(charIndex);
+                    }
+                    charIndex++;
+                    setTimeout(typeNextMessage, 80); // Adjust typing speed
+                } else {
+                    if (currentIndex < thankYouMessages.length - 1) {
+                        currentIndex++;
+                        charIndex = 0;
+                        setTimeout(typeNextMessage, 500);
+                    } else {
+                        thankYouGif.src = 'https://media.giphy.com/media/SvvfK2dco188Wk4ZTq/giphy.gif';
+                    }
+                }
+            }
+
+            typeNextMessage();
+        }
+
+        yesBtn.addEventListener('click', () => {
+            typingText.style.display = 'none';
+            questionText.style.display = 'none';
+            buttonsDiv.style.display = 'none';
+
+            thankYouMessage.style.display = 'flex';
+            typeThankYouText();
+        });
+
+        function moveButton() {
+            const rect = noBtn.getBoundingClientRect();
+            const offset = 20;
+            const moveX = Math.floor(Math.random() * offset * 20 - offset);
+            const moveY = Math.floor(Math.random() * offset * 20 - offset);
+            noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        }
+
+        // Start typing the text when the page loads
+        window.onload = function() {
+            setTimeout(typeText, 1000);
+        }
+    </script>
+</body>
+
+</html>
